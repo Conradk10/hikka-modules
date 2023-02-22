@@ -1,4 +1,4 @@
-__version__ = (1, 0, 0)
+__version__ = (0, 0, 8)
 #
 #     d88P     d88P          888b    888          888
 #      d88P   d88P           8888b   888          888
@@ -23,6 +23,7 @@ import logging
 import re
 
 from telethon import types
+from telethon.tl.patched import Message as mmmm
 from tgchequeman import exceptions, activate_multicheque, parse_url
 
 from .. import loader, utils
@@ -63,11 +64,17 @@ class TonRocketCatcherMod(loader.Module):
         except exceptions.UnknownError as err:
             logger.error(err)
             return
+        except exceptions.Success:
+            return
         except Exception as err:
             logger.error(err)
 
     async def watcher(self, message: types.Message) -> None:
         # Если сообщение от имени @TonRocketBot
+        if not isinstance(message, mmmm):
+            return
+        if message.from_id in [self.tonrocketbot_id]:
+            return
         if message.via_bot_id in [self.tonrocketbot_id]:
             for row in message.reply_markup.rows:
                 for button in row.buttons:
