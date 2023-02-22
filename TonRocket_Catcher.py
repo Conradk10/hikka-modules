@@ -17,7 +17,7 @@ __version__ = (0, 0, 8)
 #
 
 # meta developer: @zxcghost666
-# requires: tgchequeman==0.0.5
+# requires: tgchequeman==0.0.8
 
 import logging
 import re
